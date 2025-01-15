@@ -22,7 +22,7 @@ pip-delete-this-directory.txt
 *.lock
 
 # IDE specific directories
-.vscode/
+
 .idea/
 
 # Azure Function local settings
@@ -45,3 +45,5 @@ wwwroot/
 # Log files
 *.log
 logs/
+
+.python_packages
