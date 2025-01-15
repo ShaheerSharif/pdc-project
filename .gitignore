@@ -1,0 +1,47 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+
+# Virtual environment
+venv/
+env/
+.env/
+
+# Python egg info
+*.egg-info/
+*.eggs/
+
+# Distribution / Packaging
+*.egg
+dist/
+build/
+
+# PIP and other dependency management
+pip-log.txt
+pip-delete-this-directory.txt
+*.lock
+
+# IDE specific directories
+.vscode/
+.idea/
+
+# Azure Function local settings
+local.settings.json
+
+# Azure Functions build output (if applicable)
+bin/
+obj/
+
+# Azure App Service or Deployment directories
+wwwroot/
+
+# Environment variables file (if any)
+.env
+
+# Flask or Django secret keys (if applicable)
+*.key
+*.pem
+
+# Log files
+*.log
+logs/

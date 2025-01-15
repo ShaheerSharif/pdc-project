@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Update Item</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
+  </script>
+
+</head>
+
+<body>
+  {% extends 'base.html' %}
+
+  {% block content %}
+  <div class="form-container">
+    <h1>Update Item</h1>
+    <form method="post">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" value="{{ item.name }}" required><br>
+
+      <label for="quantity">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" value="{{ item.quantity }}" min="0" required><br>
+
+      <label for="price">Price per unit (USD):</label>
+      <input type="text" id="price" name="price" value="{{ item.price }}" required><br>
+
+      <input type="submit" value="Update">
+    </form>
+  </div>
+  {% endblock %}
+</body>
+
+</html>

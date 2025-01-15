@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+</head>
+
+<body>
+	{% extends 'base.html' %}
+
+	{% block content %}
+	<div class="table-container">
+		<table border="1">
+			<tr>
+				<th>Name</th>
+				<th>Quantity</th>
+				<th>Price per Unit (USD)</th>
+				<th>Actions</th>
+			</tr>
+			{% for item in inventory %}
+			<tr>
+				<td>{{ item.name }}</td>
+				<td>{{ item.quantity }}</td>
+				<td>${{ "%.2f" | format(item.price) }}</td>
+				<td colspan="2" class="actions" align="center">
+					<div class="action-button">
+						<a href="/update/{{ loop.index0 }}" class="btn update-btn">Update</a>
+						<a href="/delete/{{ loop.index0 }}" class="btn delete-btn">Delete</a>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% endblock %}
+</body>
+
+</html>
