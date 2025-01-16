@@ -19,7 +19,7 @@ USERS_FILE_PATH = "db/users.json"
 def admin():
     if "user" not in session and not session.get("is_admin"):
         return jsonify({"message": "Log in first"}), 401
-    
+
     return render_template("admin/index.html", inventory=inventory)
 
 
@@ -42,7 +42,7 @@ def signin():
 
         if user is None:
             return jsonify({"message": "Unknown username or password"}), 404
-        
+
         elif user["username"] == "admin":
             session["user"] = user["username"]
             session["is_admin"] = True
@@ -52,26 +52,26 @@ def signin():
             session["user"] = user["username"]
             session["is_admin"] = False
             return redirect(url_for("shop"))
-    
+
     return render_template("signin.html")
 
 
 @app.route("/signup", methods=["GET", "POST"])
 def signup():
-    if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+
         users = get_users()
-        
+
         # Check if user already exists
-        if any(user['username'] == username for user in users):
+        if any(user["username"] == username for user in users):
             return jsonify({"message": "Pick another username"}), 402
-        
-        users.append({'username': username, 'password': password})
+
+        users.append({"username": username, "password": password})
         set_users(users)
-        return redirect(url_for('signin'))
-    
+        return redirect(url_for("signin"))
+
     return render_template("signup.html")
 
 
@@ -124,7 +124,7 @@ def update_item(item_id):
 def delete_item(item_id):
     if "user" not in session and not session.get("is_admin"):
         return jsonify({"message": "Log in first"}), 401
-    
+
     inventory = get_inventory()
     inventory.pop(item_id)
     set_inventory(inventory)
@@ -140,18 +140,18 @@ def shop():
 
 @app.route("/add-to-cart", methods=["GET", "POST"])
 def add_to_cart():
-    if 'user' not in session:
-        return redirect(url_for('signin'))
-    
+    if "user" not in session:
+        return redirect(url_for("signin"))
+
     cart = get_session_cart()
-    
+
     inventory = get_inventory()
     (item_names, _, _) = get_request_info()
 
     if item_names is None:
         return jsonify({"message": "Product not found"}), 404
-     
-    item = next((i for i in inventory if i['name'] == item_names), None)
+
+    item = next((i for i in inventory if i["name"] == item_names), None)
 
     if item:
         if cart:
@@ -159,33 +159,31 @@ def add_to_cart():
             if cart_item:
                 cart_item["quantity"] += 1
             else:
-                cart.append({"name": item["name"], "quantity": 1, "price": item["price"]})
+                cart.append(
+                    {"name": item["name"], "quantity": 1, "price": item["price"]}
+                )
 
     set_session_cart(cart)
 
     return redirect(url_for("shop"))
 
 
-
 @app.route("/cart")
 def view_cart():
-    if 'user' not in session:
-        return redirect(url_for('signin'))
-    
+    if "user" not in session:
+        return redirect(url_for("signin"))
+
     cart = get_session_cart()
-    total = 0
+    total = sum(item["price"] * item["quantity"] for item in cart) if cart else 0
 
-    if cart:
-        total = sum(item['price'] * item['quantity'] for item in cart)
-
-    return render_template('customer/cart.html', cart=cart, total=total)
+    return render_template("customer/cart.html", cart=cart, total=total)
 
 
 @app.route("/checkout", methods=["GET", "POST"])
 def checkout():
-    if 'user' not in session:
-        return redirect(url_for('signin'))
-    
+    if "user" not in session:
+        return redirect(url_for("signin"))
+
     cart = get_session_cart()
     inventory = get_inventory()
 
@@ -193,14 +191,16 @@ def checkout():
         total = sum(item["price"] * item["quantity"] for item in cart)
 
         for cart_item in cart:
-            inventory_item = next((item for item in inventory if item["name"] == cart_item["name"]), None)
+            inventory_item = next(
+                (item for item in inventory if item["name"] == cart_item["name"]), None
+            )
 
             if inventory_item:
                 inventory_item["quantity"] -= cart_item["quantity"]
 
         set_inventory(inventory)
-    
-    session.pop('cart', None)
+
+    session.pop("cart", None)
     return render_template("customer/checkout.html", cart=cart, total=total)
 
 
@@ -247,7 +247,7 @@ def set_users(users):
 
 
 def get_session_cart():
-    return session.get("cart")
+    return session.get("cart", [])
 
 
 def set_session_cart(cart):

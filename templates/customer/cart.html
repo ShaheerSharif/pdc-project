@@ -18,7 +18,7 @@
   <div class="button-container" style="text-align: center;">
     <a href="/checkout" class="button">Checkout</a>
   </div>
-
+  {% if cart %}
   <table border="1">
     <thead>
       <tr>
@@ -39,6 +39,9 @@
       {% endfor %}
     </tbody>
   </table>
+  {% else %}
+  <p>Your cart is empty.</p>
+  {% endif %}
   {% endblock %}
 </body>
 
