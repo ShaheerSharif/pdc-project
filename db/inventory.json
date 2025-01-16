@@ -1,12 +1,27 @@
 [
     {
-        "name": "Headphones",
-        "quantity": 12,
-        "price": 12.0
+        "name": "Phone",
+        "quantity": 100,
+        "price": 10.0
+    },
+    {
+        "name": "Headphone",
+        "quantity": 50,
+        "price": 50.0
     },
     {
         "name": "Earbuds",
-        "quantity": 12,
-        "price": 30.0
+        "quantity": 200,
+        "price": 5.5
+    },
+    {
+        "name": "Macbook",
+        "quantity": 150,
+        "price": 1000.0
+    },
+    {
+        "name": "Router",
+        "quantity": 400,
+        "price": 185.5
     }
 ]

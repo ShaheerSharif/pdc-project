@@ -1,5 +1,18 @@
-{
-    "id": 1,
-    "name": "admin",
-    "pass": "admin"
-}
+[
+    {
+        "username": "admin",
+        "password": "admin"
+    },
+    {
+        "username": "shaheer",
+        "password": "123"
+    },
+    {
+        "username": "example_user",
+        "password": "123"
+    },
+    {
+        "username": "test",
+        "password": "abcd"
+    }
+]

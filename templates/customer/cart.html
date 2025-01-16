@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/button.css') }}">
+</head>
+
+<body>
+  {% extends 'customer/base.html' %}
+
+  {% block content %}
+  <h1 style="text-align: center;">Your Cart</h1>
+
+  <div class="button-container" style="text-align: center;">
+    <a href="/checkout" class="button">Checkout</a>
+  </div>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Quantity</th>
+        <th>Price per Unit (USD)</th>
+        <th>Total Price (USD)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+      <tr>
+        <td>{{ item.name }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>${{ "%.2f" | format(item.price) }}</td>
+        <td>${{ "%.2f" | format(item.price * item.quantity) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>View Items</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/table.css') }}">
+</head>
+
+<body>
+	{% extends 'admin/base.html' %}
+
+	{% block content %}
+	<div class="table-container">
+		<table border="1">
+			<tr>
+				<th>Name</th>
+				<th>Quantity</th>
+				<th>Price per unit (USD)</th>
+				<th>Actions</th>
+			</tr>
+			{% for item in inventory %}
+			<tr>
+				<td>{{ item.name }}</td>
+				<td>{{ item.quantity }}</td>
+				<td>${{ "%.2f" | format(item.price) }}</td>
+				<td colspan="2" class="actions" align="center">
+					<div class="action-button">
+						<a href="/update-inv/{{ loop.index0 }}" class="btn update-btn">Update</a>
+						<a href="/delete-inv/{{ loop.index0 }}" class="btn delete-btn">Delete</a>
+					</div>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+	{% endblock %}
+</body>
+
+</html>

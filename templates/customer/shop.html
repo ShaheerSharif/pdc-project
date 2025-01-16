@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/card.css') }}">
+</head>
+
+<body>
+  {% extends 'customer/base.html' %}
+
+  {% block content %}
+  <h1>Shop</h1>
+  <div class="card-container">
+    {% for item in inventory %}
+    <div class="card">
+      <h2>{{ item.name }}</h2>
+      <p>Quantity: {{ item.quantity }}</p>
+      <p>Price: ${{ "%.2f" | format(item.price) }}</p>
+      <form action="{{ url_for('add_to_cart', item_id=loop.index0) }}" method="POST">
+        <input type="hidden" name="name" value="{{ item.name }}">
+        <input type="hidden" name="price" value="{{ item.price }}">
+        <label for="quantity-{{ loop.index0 }}">Quantity:</label>
+        <input type="number" id="quantity-{{ loop.index0 }}" name="quantity" value="0" min="0" max="{{ item.quantity }}"
+          required>
+        <input type="submit" value="Add to Cart">
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% endblock %}
+</body>
+
+</html>
